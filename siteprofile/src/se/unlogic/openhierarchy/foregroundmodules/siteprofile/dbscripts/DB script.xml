@@ -1,0 +1,96 @@
+<DBScripts>
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `site_profiles` (
+				  `profileID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `name` VARCHAR(255) NOT NULL,
+				  `design` VARCHAR(255) NOT NULL,
+				  PRIMARY KEY (`profileID`)
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `site_profile_global_settings` (
+				  `settingID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `index` INTEGER UNSIGNED NOT NULL,
+				  `value` VARCHAR(4096) NOT NULL,
+				  PRIMARY KEY (`settingID`, `index`)
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `site_profile_settings` (
+				  `settingID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `index` INTEGER UNSIGNED NOT NULL,
+				  `value` VARCHAR(4096) NOT NULL,
+				  `profileID` INTEGER UNSIGNED NOT NULL,
+				  PRIMARY KEY (`settingID`, `index`, `profileID`),
+				  CONSTRAINT `FK_site_profile_settings_1` FOREIGN KEY `FK_site_profile_settings_1` (`profileID`)
+				    REFERENCES `site_profiles` (`profileID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `site_profile_domains` (
+				  `profileID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `domain` VARCHAR(255) NOT NULL,
+				  PRIMARY KEY (`profileID`, `domain`),
+				  CONSTRAINT `FK_site_profile_domains_1` FOREIGN KEY `FK_site_profile_domains_1` (`profileID`)
+				    REFERENCES `site_profiles` (`profileID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+				
+	</Script>
+	
+	<Script version="2">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `site_profile_global_settings` CHANGE COLUMN `index` `sortIndex` INT(10) UNSIGNED NOT NULL,
+				 DROP PRIMARY KEY,
+				 ADD PRIMARY KEY  USING BTREE(`settingID`, `sortIndex`);
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `site_profile_settings` CHANGE COLUMN `index` `sortIndex` INT(10) UNSIGNED NOT NULL,
+				 DROP PRIMARY KEY,
+				 ADD PRIMARY KEY  USING BTREE(`settingID`, `sortIndex`, `profileID`);
+			]]>
+		</Query>			
+	</Script>
+	
+	<Script version="3">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `site_profiles` MODIFY COLUMN `design` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL;	
+			]]>
+		</Query>			
+	</Script>	
+	
+	<Script version="4">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `site_profile_settings` MODIFY COLUMN `settingID` VARCHAR(255) NOT NULL;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `site_profile_global_settings` MODIFY COLUMN `settingID` VARCHAR(255) NOT NULL;
+			]]>
+		</Query>				
+	</Script>	
+	
+</DBScripts>

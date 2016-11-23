@@ -1,0 +1,49 @@
+<DBScripts>
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				CREATE TABLE IF NOT EXISTS `ivis_text_area_queries` (
+				  `queryID` INTEGER UNSIGNED NOT NULL,
+				  `description` TEXT,
+				  `helpText` TEXT,
+				  `maxLength` INTEGER UNSIGNED,
+				  PRIMARY KEY (`queryID`)
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE IF NOT EXISTS `ivis_text_area_query_instances` (
+				  `queryInstanceID` INTEGER UNSIGNED NOT NULL,
+				  `queryID` INTEGER UNSIGNED NOT NULL,
+				  `value` TEXT,
+				  PRIMARY KEY (`queryInstanceID`),
+				  FOREIGN KEY `FK_ivis_text_area_query_instances_1` (`queryID`)
+				  REFERENCES `ivis_text_area_queries` (`queryID`)
+					ON DELETE CASCADE
+					ON UPDATE CASCADE
+				)
+				  ENGINE = InnoDB;
+			]]>
+		</Query>		
+	</Script>
+
+	<Script version="2">
+		<Query>
+			<![CDATA[
+					ALTER TABLE ivis_text_area_queries ADD dependsOn TINYINT DEFAULT FALSE  NOT NULL;
+					]]>
+		</Query>
+		<Query>
+			<![CDATA[
+					ALTER TABLE ivis_text_area_queries ADD dependencySourceName VARCHAR(255) NULL;
+					]]>
+		</Query>
+		<Query>
+			<![CDATA[
+					ALTER TABLE ivis_text_area_queries ADD dependencyFieldName VARCHAR(255) NULL;
+					]]>
+		</Query>
+	</Script>
+</DBScripts>

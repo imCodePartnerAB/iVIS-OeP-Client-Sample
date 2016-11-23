@@ -1,0 +1,42 @@
+<DBScripts>
+	
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `pagegroups` MODIFY COLUMN `groupID` INT(10) NOT NULL;
+			]]>
+		</Query>
+	</Script>	
+		
+	<Script version="2">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `pagegroups` RENAME TO `page_groups`;
+			]]>
+		</Query>
+		
+		<Query>
+			<![CDATA[
+				ALTER TABLE `pageusers` RENAME TO `page_users`;
+			]]>
+		</Query>		
+	</Script>		
+		
+	<Script version="3">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `pages` DROP FOREIGN KEY `FK_pages_1`;
+			]]>
+		</Query>
+		
+		<Query>
+			<![CDATA[
+				ALTER TABLE `pages` ADD CONSTRAINT `FK_pages_1` FOREIGN KEY `FK_pages_1` (`sectionID`)
+					REFERENCES `openhierarchy_sections` (`sectionID`)
+					ON DELETE CASCADE
+					ON UPDATE CASCADE;
+			]]>
+		</Query>		
+	</Script>		
+		
+</DBScripts>

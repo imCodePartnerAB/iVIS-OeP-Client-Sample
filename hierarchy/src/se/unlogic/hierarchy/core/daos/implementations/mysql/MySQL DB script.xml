@@ -1,0 +1,955 @@
+<DBScripts>
+
+	<!-- Reserved for DB changes in 0.9.1 -->
+	<Script version="1">
+	</Script>
+
+	<!-- Reserved for DB changes in 0.9.2 -->
+	<Script version="2">
+	</Script>
+
+	<!-- Reserved for DB changes in 0.9.3 -->
+	<Script version="3">
+	</Script>
+
+	<!-- Reserved for DB changes in 0.9.4 -->
+	<Script version="4">
+	</Script>
+
+	<!-- Reserved for DB changes in 0.9.5 -->
+	<Script version="5">
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.6 -->
+	<Script version="6">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `datasources` ADD COLUMN `logAbandoned` BOOLEAN DEFAULT 0 AFTER `name`,
+				 ADD COLUMN `removeAbandoned` BOOLEAN DEFAULT 0 AFTER `logAbandoned`,
+				 ADD COLUMN `removeTimeout` INTEGER UNSIGNED DEFAULT 30 AFTER `removeAbandoned`,
+				 ADD COLUMN `testOnBorrow` BOOLEAN DEFAULT 0 AFTER `removeTimeout`,
+				 ADD COLUMN `validationQuery` VARCHAR(255) DEFAULT 'SELECT 1' AFTER `testOnBorrow`,
+				 ADD COLUMN `maxActive` INTEGER UNSIGNED DEFAULT 30 AFTER `validationQuery`,
+				 ADD COLUMN `maxIdle` INTEGER UNSIGNED DEFAULT 8 AFTER `maxActive`,
+				 ADD COLUMN `minIdle` INTEGER UNSIGNED DEFAULT 0 AFTER `maxIdle`,
+				 ADD COLUMN `maxWait` INTEGER UNSIGNED DEFAULT 0 AFTER `minIdle`;			
+			]]>	
+		</Query>			
+	</Script>
+	
+	<!-- Reserved for DB changes in 0.9.7 -->
+	<Script version="7">
+	</Script>
+	
+	<!-- Reserved for DB changes in 0.9.8 -->
+	<Script version="8">
+	</Script>
+	
+	<!-- Reserved for DB changes in 0.9.9 -->
+	<Script version="9">
+	</Script>		
+	
+	<!-- Script for DB changes in 0.9.10 -->
+	<Script version="10">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `backgroundmodules` (
+				  `moduleID` int(10) unsigned NOT NULL auto_increment,
+				  `classname` varchar(255) NOT NULL default '',
+				  `name` text NOT NULL,
+				  `xslPath` text,
+				  `xslPathType` varchar(255) default NULL,
+				  `anonymousAccess` tinyint(1) NOT NULL default '0',
+				  `userAccess` tinyint(1) NOT NULL default '0',
+				  `adminAccess` tinyint(1) NOT NULL default '0',
+				  `enabled` tinyint(1) NOT NULL default '0',
+				  `sectionID` int(10) unsigned NOT NULL default '0',
+				  `dataSourceID` int(10) unsigned default NULL,
+				  `staticContentPackage` varchar(255) default NULL,
+				  PRIMARY KEY  (`moduleID`),
+				  KEY `FK_backgroundmodules_1` (`sectionID`),
+				  KEY `FK_backgroundmodules_2` (`dataSourceID`),
+				  CONSTRAINT `FK_backgroundmodules_1` FOREIGN KEY (`sectionID`) REFERENCES `sections` (`sectionID`) ON DELETE CASCADE ON UPDATE CASCADE,
+				  CONSTRAINT `FK_backgroundmodules_2` FOREIGN KEY (`dataSourceID`) REFERENCES `datasources` (`dataSourceID`) ON DELETE SET NULL ON UPDATE CASCADE
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;			
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `backgroundmodulealiases` (
+				  `moduleID` int(10) unsigned NOT NULL auto_increment,
+				  `alias` varchar(255) NOT NULL,
+				  PRIMARY KEY  (`moduleID`,`alias`),
+				  CONSTRAINT `FK_backgroundmodulealiases_1` FOREIGN KEY (`moduleID`) REFERENCES `backgroundmodules` (`moduleID`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;			
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `backgroundmodulegroups` (
+				  `moduleID` int(10) unsigned NOT NULL,
+				  `groupID` int(10) unsigned NOT NULL,
+				  PRIMARY KEY  (`moduleID`,`groupID`),
+				  KEY `FK_backgroundmodulegroups_2` (`groupID`),
+				  CONSTRAINT `FK_backgroundmodulegroups_1` FOREIGN KEY (`moduleID`) REFERENCES `backgroundmodules` (`moduleID`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;			
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `backgroundmodulesettings` (
+				  `counter` int(10) unsigned NOT NULL auto_increment,
+				  `moduleID` int(10) unsigned NOT NULL,
+				  `id` varchar(255) NOT NULL,
+				  `value` mediumtext NOT NULL,
+				  PRIMARY KEY  (`counter`),
+				  KEY `FK_backgroundmodulesettings_1` (`moduleID`),
+				  CONSTRAINT `FK_backgroundmodulesettings_1` FOREIGN KEY (`moduleID`) REFERENCES `backgroundmodules` (`moduleID`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;			
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `backgroundmoduleslots` (
+				  `moduleID` int(10) unsigned NOT NULL auto_increment,
+				  `slot` varchar(255) NOT NULL,
+				  PRIMARY KEY  (`moduleID`,`slot`),
+				  CONSTRAINT `FK_backgroundmoduleslots_1` FOREIGN KEY (`moduleID`) REFERENCES `backgroundmodules` (`moduleID`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;			
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `backgroundmoduleusers` (
+				  `moduleID` int(10) unsigned NOT NULL auto_increment,
+				  `userID` int(10) unsigned NOT NULL,
+				  PRIMARY KEY  (`moduleID`,`userID`),
+				  CONSTRAINT `FK_backgroundmoduleusers_1` FOREIGN KEY (`moduleID`) REFERENCES `backgroundmodules` (`moduleID`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;			
+			]]>	
+		</Query>		
+	</Script>
+	
+	<!-- Reserved for DB changes in 0.9.11 -->
+	<Script version="11">
+	</Script>
+	
+	<!-- Reserved for DB changes in 0.9.12 -->
+	<Script version="12">
+	</Script>	
+	
+	<!-- Script for DB changes in 0.9.13 -->
+	<Script version="13">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sections` MODIFY COLUMN `alias` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;			
+			]]>	
+		</Query>
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.14 -->
+	<Script version="14">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sections` ADD COLUMN `breadCrumb` BOOLEAN DEFAULT 1 AFTER `visibleInMenu`;			
+			]]>	
+		</Query>
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.15 -->
+	<Script version="15">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `datasources` ADD COLUMN `defaultCatalog` VARCHAR(255) AFTER `maxWait`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `modules` RENAME TO `foregroundmodules`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `modulegroups` RENAME TO `foregroundmodulegroups`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `modulesettings` RENAME TO `foregroundmodulesettings`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `moduleusers` RENAME TO `foregroundmoduleusers`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				UPDATE foregroundmodules SET xslPath = replace(xslPath,'.se.xsl','.sv.xsl');
+			]]>	
+		</Query>				
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.16 -->
+	<Script version="16">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `users` ADD COLUMN `language` VARCHAR(76) AFTER `lastlogin`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `users` MODIFY COLUMN `username` VARCHAR(20) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL, 
+				MODIFY COLUMN `firstname` VARCHAR(30) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+				MODIFY COLUMN `lastname` VARCHAR(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL,
+				ADD COLUMN `preferedDesign` VARCHAR(255) AFTER `language`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `usergroups` DROP FOREIGN KEY `FK_usergroups_2`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				UPDATE foregroundmodules SET classname = "se.unlogic.hierarchy.modules.userproviders.SimpleUserProviderModule" WHERE classname = "se.unlogic.hierarchy.modules.dbuserprovider.DBUserProviderModule";
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				UPDATE foregroundmodules SET classname = "se.unlogic.hierarchy.modules.registration.SimpleUserProviderRegistrationModule" WHERE classname = "se.unlogic.hierarchy.modules.registration.RegistrationModule";
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				UPDATE foregroundmodules SET classname = "se.unlogic.hierarchy.modules.login.UserProviderLoginModule" WHERE classname = "se.unlogic.hierarchy.modules.login.LoginModule";
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				INSERT INTO foregroundmodulesettings VALUES (null,(SELECT moduleID FROM foregroundmodules WHERE classname = "se.unlogic.hierarchy.modules.userproviders.SimpleUserProviderModule"),"passwordAlgorithm","MySQL");
+			]]>	
+		</Query>		
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.17 -->
+	<Script version="17">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sections` ADD COLUMN `requiredProtocol` VARCHAR(45) AFTER `adminDefaultURI`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmodules` ADD COLUMN `requiredProtocol` VARCHAR(45) AFTER `staticContentPackage`;
+			]]>	
+		</Query>
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.18 -->
+	<Script version="18">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `filtermodules` (
+				  `moduleID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+				  `classname` varchar(255) NOT NULL DEFAULT '',
+				  `name` text NOT NULL,
+				  `anonymousAccess` tinyint(1) NOT NULL DEFAULT '0',
+				  `userAccess` tinyint(1) NOT NULL DEFAULT '0',
+				  `adminAccess` tinyint(1) NOT NULL DEFAULT '0',
+				  `enabled` tinyint(1) NOT NULL DEFAULT '0',
+				  `dataSourceID` int(10) unsigned DEFAULT NULL,
+				  PRIMARY KEY (`moduleID`),
+				  KEY `FK_filtermodules_1` (`dataSourceID`),
+				  CONSTRAINT `FK_filtermodules_1` FOREIGN KEY (`dataSourceID`) REFERENCES `datasources` (`dataSourceID`) ON DELETE SET NULL ON UPDATE CASCADE
+				) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodules` ADD COLUMN `priority` INTEGER UNSIGNED NOT NULL AFTER `dataSourceID`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `filtermodulealiases` (
+				  `moduleID` int(10) unsigned NOT NULL auto_increment,
+				  `alias` varchar(255) NOT NULL,
+				  PRIMARY KEY  (`moduleID`,`alias`),
+				  CONSTRAINT `FK_filtermodulealiases_1` FOREIGN KEY (`moduleID`) REFERENCES `filtermodules` (`moduleID`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `filtermodulegroups` (
+				  `moduleID` int(10) unsigned NOT NULL,
+				  `groupID` int(10) unsigned NOT NULL,
+				  PRIMARY KEY  (`moduleID`,`groupID`),
+				  KEY `FK_filtermodulegroups_2` (`groupID`),
+				  CONSTRAINT `FK_filtermodulegroups_1` FOREIGN KEY (`moduleID`) REFERENCES `filtermodules` (`moduleID`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+							]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `filtermoduleusers` (
+				  `moduleID` int(10) unsigned NOT NULL auto_increment,
+				  `userID` int(10) unsigned NOT NULL,
+				  PRIMARY KEY  (`moduleID`,`userID`),
+				  CONSTRAINT `FK_filtermoduleusers_1` FOREIGN KEY (`moduleID`) REFERENCES `filtermodules` (`moduleID`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `filtermodulesettings` (
+				  `counter` int(10) unsigned NOT NULL auto_increment,
+				  `moduleID` int(10) unsigned NOT NULL,
+				  `id` varchar(255) NOT NULL,
+				  `value` mediumtext NOT NULL,
+				  PRIMARY KEY  (`counter`),
+				  KEY `FK_filtermodulesettings_1` (`moduleID`),
+				  CONSTRAINT `FK_filtermodulesettings_1` FOREIGN KEY (`moduleID`) REFERENCES `filtermodules` (`moduleID`) ON DELETE CASCADE ON UPDATE CASCADE
+				) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;				
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				UPDATE foregroundmodules SET classname = replace(classname,'se.unlogic.hierarchy.modules','se.unlogic.hierarchy.foregroundmodules');
+			]]>	
+		</Query>			
+	</Script>
+	
+	<!-- Reserved for DB changes in 0.9.19 -->
+	<Script version="19">
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.20 -->
+	<Script version="20">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodulealiases` ADD COLUMN `listIndex` INTEGER UNSIGNED NOT NULL AFTER `alias`;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodulealiases` ADD COLUMN `listIndex` INTEGER UNSIGNED NOT NULL AFTER `alias`;
+			]]>	
+		</Query>
+	</Script>
+	
+	<!-- Reserved for DB changes in 0.9.21 -->
+	<Script version="21">
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.22 -->
+	<Script version="22">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sections` MODIFY COLUMN `alias` VARCHAR(255) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodulealiases` MODIFY COLUMN `alias` VARCHAR(255) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodulealiases` MODIFY COLUMN `alias` VARCHAR(255) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;
+			]]>	
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmodules` MODIFY COLUMN `alias` VARCHAR(45) BINARY CHARACTER SET latin1 COLLATE latin1_bin NOT NULL;
+			]]>	
+		</Query>
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.23 -->
+	<Script version="23">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `users` MODIFY COLUMN `username` VARCHAR(40) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+			]]>	
+		</Query>
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.24 -->
+	<Script version="24">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodules` ADD COLUMN `priority` INTEGER UNSIGNED NOT NULL AFTER `staticContentPackage`;
+			]]>	
+		</Query>
+	</Script>
+	
+	<!-- Script for DB changes in 0.9.25 -->
+	<Script version="25">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `virtualmenuitemgroups` MODIFY COLUMN `groupID` INT(10) NOT NULL;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sectiongroups` MODIFY COLUMN `groupID` INT(10) NOT NULL;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmodulegroups` MODIFY COLUMN `groupID` INT(10) NOT NULL;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodulegroups` MODIFY COLUMN `groupID` INT(10) NOT NULL;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodulegroups` MODIFY COLUMN `groupID` INT(10) NOT NULL;
+			]]>
+		</Query>	
+	</Script>
+	
+	<!-- Script for DB changes in 1.1.0 -->
+	<Script version="26">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sections` MODIFY COLUMN `anonymousDefaultURI` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+				 MODIFY COLUMN `userDefaultURI` VARCHAR(255) CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+				 DROP COLUMN `adminDefaultURI`;
+			]]>
+		</Query>	
+	</Script>		
+			
+	<!-- Script for DB changes in 1.1.1 -->
+ 	<Script version="27">
+		<Query>
+			<![CDATA[
+				SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodulealiases` DROP FOREIGN KEY `FK_backgroundmodulealiases_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodulegroups` DROP FOREIGN KEY `FK_backgroundmodulegroups_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodules` DROP FOREIGN KEY `FK_backgroundmodules_1` , DROP FOREIGN KEY `FK_backgroundmodules_2`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodulesettings` DROP FOREIGN KEY `FK_backgroundmodulesettings_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmoduleslots` DROP FOREIGN KEY `FK_backgroundmoduleslots_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmoduleusers` DROP FOREIGN KEY `FK_backgroundmoduleusers_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodulealiases` DROP FOREIGN KEY `FK_filtermodulealiases_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodulegroups` DROP FOREIGN KEY `FK_filtermodulegroups_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodules` DROP FOREIGN KEY `FK_filtermodules_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodulesettings` DROP FOREIGN KEY `FK_filtermodulesettings_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermoduleusers` DROP FOREIGN KEY `FK_filtermoduleusers_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmodulegroups` DROP FOREIGN KEY `FK_modulegroups_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmodules` DROP FOREIGN KEY `FK_modules_1` , DROP FOREIGN KEY `FK_modules_2`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmodulesettings` DROP FOREIGN KEY `FK_modulesettings_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmoduleusers` DROP FOREIGN KEY `FK_moduleusers_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `menuindex` DROP FOREIGN KEY `FK_menuindex_1` , DROP FOREIGN KEY `FK_menuindex_2` , DROP FOREIGN KEY `FK_menuindex_3` , DROP FOREIGN KEY `FK_menuindex_4`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sectiongroups` DROP FOREIGN KEY `FK_sectiongroups_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sections` DROP FOREIGN KEY `FK_sections_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sectionusers` DROP FOREIGN KEY `FK_sectionusers_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `virtualmenuitemgroups` DROP FOREIGN KEY `FK_virtualmenuitemgroups_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `virtualmenuitems` DROP FOREIGN KEY `FK_virtualmenuitems_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `virtualmenuitemusers` DROP FOREIGN KEY `FK_virtualmenuitemusers_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodulealiases` 
+					ADD CONSTRAINT `FK_backgroundmodulealiases_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_background_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_background_module_aliases`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodulegroups` 
+					ADD CONSTRAINT `FK_backgroundmodulegroups_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_background_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_background_module_groups`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodules` 
+					ADD CONSTRAINT `FK_backgroundmodules_1`
+					FOREIGN KEY (`sectionID` )
+					REFERENCES `openhierarchy_sections` (`sectionID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, 
+					ADD CONSTRAINT `FK_backgroundmodules_2`
+					FOREIGN KEY (`dataSourceID` )
+					REFERENCES `openhierarchy_data_sources` (`dataSourceID` )
+					ON DELETE SET NULL
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_background_modules`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmodulesettings` 
+					ADD CONSTRAINT `FK_backgroundmodulesettings_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_background_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_background_module_settings`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmoduleslots` 
+					ADD CONSTRAINT `FK_backgroundmoduleslots_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_background_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_background_module_slots`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `backgroundmoduleusers` 
+					ADD CONSTRAINT `FK_backgroundmoduleusers_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_background_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_background_module_users`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `datasources` RENAME TO  `openhierarchy_data_sources`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodulealiases` 
+					ADD CONSTRAINT `FK_filtermodulealiases_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_filter_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_filter_module_aliases`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodulegroups` 
+					ADD CONSTRAINT `FK_filtermodulegroups_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_filter_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_filter_module_groups`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodules` 
+					ADD CONSTRAINT `FK_filtermodules_1`
+					FOREIGN KEY (`dataSourceID` )
+					REFERENCES `openhierarchy_data_sources` (`dataSourceID` )
+					ON DELETE SET NULL
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_filter_modules`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermodulesettings` 
+					ADD CONSTRAINT `FK_filtermodulesettings_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_filter_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_filter_module_settings`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `filtermoduleusers` 
+					ADD CONSTRAINT `FK_filtermoduleusers_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_filter_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_filter_module_users`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmodulegroups` 
+					ADD CONSTRAINT `FK_modulegroups_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_foreground_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_foreground_module_groups`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmodules` 
+					ADD CONSTRAINT `FK_modules_1`
+					FOREIGN KEY (`sectionID` )
+					REFERENCES `openhierarchy_sections` (`sectionID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, 
+					ADD CONSTRAINT `FK_modules_2`
+					FOREIGN KEY (`dataSourceID` )
+					REFERENCES `openhierarchy_data_sources` (`dataSourceID` )
+					ON DELETE SET NULL
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_foreground_modules`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmodulesettings` 
+					ADD CONSTRAINT `FK_modulesettings_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_foreground_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_foreground_module_settings`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `foregroundmoduleusers` 
+					ADD CONSTRAINT `FK_moduleusers_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_foreground_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_foreground_module_users`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `menuindex` 
+					ADD CONSTRAINT `FK_menuindex_1`
+					FOREIGN KEY (`moduleID` )
+					REFERENCES `openhierarchy_foreground_modules` (`moduleID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, 
+					ADD CONSTRAINT `FK_menuindex_2`
+					FOREIGN KEY (`sectionID` )
+					REFERENCES `openhierarchy_sections` (`sectionID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, 
+					ADD CONSTRAINT `FK_menuindex_3`
+					FOREIGN KEY (`subSectionID` )
+					REFERENCES `openhierarchy_sections` (`sectionID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, 
+					ADD CONSTRAINT `FK_menuindex_4`
+					FOREIGN KEY (`menuItemID` )
+					REFERENCES `openhierarchy_virtual_menu_items` (`menuItemID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_menu_index`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sectiongroups` 
+					ADD CONSTRAINT `FK_sectiongroups_1`
+					FOREIGN KEY (`sectionID` )
+					REFERENCES `openhierarchy_sections` (`sectionID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_section_groups`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sections` 
+					ADD CONSTRAINT `FK_sections_1`
+					FOREIGN KEY (`parentSectionID` )
+					REFERENCES `openhierarchy_sections` (`sectionID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_sections`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `sectionusers` 
+					ADD CONSTRAINT `FK_sectionusers_1`
+					FOREIGN KEY (`sectionID` )
+					REFERENCES `openhierarchy_sections` (`sectionID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_section_users`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `virtualmenuitemgroups` 
+					ADD CONSTRAINT `FK_virtualmenuitemgroups_1`
+					FOREIGN KEY (`menuItemID` )
+					REFERENCES `openhierarchy_virtual_menu_items` (`menuItemID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_virtual_menu_item_groups`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `virtualmenuitems` 
+					ADD CONSTRAINT `FK_virtualmenuitems_1`
+					FOREIGN KEY (`sectionID` )
+					REFERENCES `openhierarchy_sections` (`sectionID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_virtual_menu_items`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `virtualmenuitemusers` 
+					ADD CONSTRAINT `FK_virtualmenuitemusers_1`
+					FOREIGN KEY (`menuItemID` )
+					REFERENCES `openhierarchy_virtual_menu_items` (`menuItemID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `openhierarchy_virtual_menu_item_users`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET SQL_MODE=@OLD_SQL_MODE;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+			]]>
+		</Query>
+	</Script>		
+
+	<Script version="28">
+		<Query>
+			<![CDATA[
+				UPDATE openhierarchy_foreground_modules SET xslPath = "ThreadInfoModule.en.xsl", staticContentPackage = "staticcontent" WHERE classname = "se.unlogic.hierarchy.foregroundmodules.threadinfo.ThreadInfoModule";
+			]]>
+		</Query>	
+	</Script> 	
+ 	
+	<Script version="29">
+		<Query>
+			<![CDATA[
+				INSERT INTO openhierarchy_foreground_modules
+				  (moduleID, classname, name, alias, description, xslPath, xslPathType, anonymousAccess, userAccess, adminAccess, enabled, visibleInMenu, sectionID, dataSourceID, staticContentPackage, requiredProtocol)
+				    SELECT null,"se.unlogic.hierarchy.foregroundmodules.groupproviders.SimpleGroupProviderModule","SimpleGroupProvider","simplegroupprovider","A group provider for simple groups", null, null, 0, 0, 0, 1, 0, (SELECT sectionID FROM openhierarchy_sections WHERE parentSectionID IS NULL), null, null, null
+				      FROM openhierarchy_foreground_modules
+				         WHERE (SELECT moduleID FROM openhierarchy_foreground_modules WHERE classname = "se.dosf.communitybase.modules.dbuserprovider.DBUserProviderModule") IS NULL LIMIT 1;
+			]]>
+		</Query>	
+	</Script> 	
+	
+	<Script version="30">
+		<Query>
+			<![CDATA[
+				UPDATE openhierarchy_foreground_modules SET staticContentPackage = "/se/unlogic/hierarchy/foregroundmodules/useradmin/staticcontent" WHERE classname = "se.unlogic.hierarchy.foregroundmodules.userproviders.SimpleUserProviderModule";
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				UPDATE openhierarchy_foreground_modules SET staticContentPackage = "/se/unlogic/hierarchy/foregroundmodules/useradmin/staticcontent" WHERE classname = "se.unlogic.hierarchy.foregroundmodules.minimaluser.MinimalUserProviderModule";
+			]]>
+		</Query>			
+	</Script> 	
+	
+	<Script version="31">
+		<Query>
+			<![CDATA[
+				UPDATE openhierarchy_foreground_modules SET classname = "se.unlogic.hierarchy.foregroundmodules.groupadmin.GroupAdminModule" WHERE classname = "se.unlogic.hierarchy.foregroundmodules.useradmin.GroupAdminModule";
+			]]>
+		</Query>			
+	</Script> 		
+	
+	<!-- Script for DB changes in 1.2.1 -->
+	
+	<Script version="32">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `openhierarchy_background_module_attributes` (
+				  `moduleID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `name` VARCHAR(255) NOT NULL,
+				  `value` VARCHAR(255) NOT NULL,
+				  PRIMARY KEY (`moduleID`, `name`),
+				  CONSTRAINT `FK_openhierarchy_background_module_attributes_1` FOREIGN KEY `FK_openhierarchy_background_module_attributes_1` (`moduleID`)
+				    REFERENCES `openhierarchy_background_modules` (`moduleID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;				
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `openhierarchy_foreground_module_attributes` (
+				  `moduleID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `name` VARCHAR(255) NOT NULL,
+				  `value` VARCHAR(255) NOT NULL,
+				  PRIMARY KEY (`moduleID`, `name`),
+				  CONSTRAINT `FK_openhierarchy_foreground_module_attributes_1` FOREIGN KEY `FK_openhierarchy_foreground_module_attributes_1` (`moduleID`)
+				    REFERENCES `openhierarchy_foreground_modules` (`moduleID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;				
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `openhierarchy_filter_module_attributes` (
+				  `moduleID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `name` VARCHAR(255) NOT NULL,
+				  `value` VARCHAR(255) NOT NULL,
+				  PRIMARY KEY (`moduleID`, `name`),
+				  CONSTRAINT `FK_openhierarchy_filter_module_attributes_1` FOREIGN KEY `FK_openhierarchy_filter_module_attributes_1` (`moduleID`)
+				    REFERENCES `openhierarchy_filter_modules` (`moduleID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;				
+			]]>
+		</Query>					
+	</Script> 	
+	
+	<!-- Script for DB changes in 1.2.4 -->
+	
+	<Script version="33">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `openhierarchy_section_attributes` (
+				  `sectionID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `name` VARCHAR(255) NOT NULL,
+				  `value` VARCHAR(255) NOT NULL,
+				  PRIMARY KEY (`sectionID`, `name`),
+				  CONSTRAINT `FK_openhierarchy_section_attributes_1` FOREIGN KEY `FK_openhierarchy_section_attributes_1` (`sectionID`)
+				    REFERENCES `openhierarchy_sections` (`sectionID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+	</Script> 
+	<Script version="34">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `openhierarchy_foreground_module_attributes` MODIFY COLUMN `value` VARCHAR(4096) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `openhierarchy_background_module_attributes` MODIFY COLUMN `value` VARCHAR(4096) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `openhierarchy_filter_module_attributes` MODIFY COLUMN `value` VARCHAR(4096) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `openhierarchy_section_attributes` MODIFY COLUMN `value` VARCHAR(4096) CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+			]]>
+		</Query>
+	</Script> 
+	
+</DBScripts>

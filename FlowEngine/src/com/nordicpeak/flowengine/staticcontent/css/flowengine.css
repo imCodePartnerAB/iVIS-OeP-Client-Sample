@@ -1,0 +1,326 @@
+@CHARSET "ISO-8859-1";
+
+/* Queries */
+/*
+.queries h1 {
+	margin: 15px 0 0 0 !important;
+	font-size: 22px;
+}
+
+.queries .query {
+	width: 100%;
+	padding: 1% 0 3% 0;
+	border-bottom: 1px solid #CECECE;
+} 
+
+.queries .query .leftcolumn {
+	padding: 0 2% 0 0;
+	width: 60%;
+	vertical-align: top;
+	display: inline-block;
+	zoom: 1;
+    *display: inline;
+}
+
+.queries .query .rightcolumn {
+	width: 37.6%;
+	vertical-align: top;
+	display: inline-block;
+	zoom: 1;
+    *display: inline;
+}
+
+.queries .query .rightcolumn .help {
+	background-color: #FEFEFE;
+	border: 1px solid #CECECE;
+	border-radius: 3px 3px 3px 3px;
+	padding: 8% 3% 3%;
+	display: none;
+}
+
+.queries .query .rightcolumn a.helplink {
+    clear: both;
+    float: right;
+    margin: 3% 3% 0 0;
+    text-decoration: none;
+}
+
+.queries .query .rightcolumn a.helplink span {
+	background: url("../pics/help.png") no-repeat scroll 0 0 #777777;
+	width: 18px;
+	height: 18px;
+	display: inline-block;
+	vertical-align: middle;
+	margin-right: 5px;
+}
+
+.queries .query .rightcolumn a.helplink:hover span {
+	background-color: #f35711;
+}
+
+.queries .query .description {
+	font-weight: bold;
+}
+
+.queries .query .description, .queries .query .htmldescription {
+	margin-bottom: 8px;
+}*/
+
+/* FlowInstanceBrowserModule */
+/*
+#FlowBrowser ol#steps {
+	text-align: justify;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+#FlowBrowser ol#steps li span {
+	color: #FFFFFF;
+	text-decoration: none;
+	padding: 1px 5px;
+	background: url("../pics/step.png") no-repeat scroll left top #CCCCCC;
+	margin-right: 5px;
+}
+
+#FlowBrowser ol#steps li.active, ol#steps li.active:active {
+	color: #393939;
+}
+
+#FlowBrowser ol#steps li.active span, ol#steps li.active:active span {
+	background-color: #f35711;	
+}
+
+#FlowBrowser ol#steps {
+	border-bottom: 1px solid #CECECE;
+    border-top: 1px solid #CECECE;
+    min-height: 25px;
+    margin: 15px 0 5px;
+    padding: 8px 2%;
+    line-height: 25px;
+}
+
+#FlowBrowser ol#steps  li {
+	display: inline-block;
+	padding: 0 11px 0 11px;
+	color: #999999;
+	zoom: 1;
+    *display: inline;
+}
+
+#FlowBrowser ol#steps:after {
+	content: '';
+	width: 100%;
+	display: inline-block;
+}
+
+#FlowBrowser .leftcolumn {
+	padding: 0 2% 0 0;
+	width: 60%;
+	vertical-align: top;
+	display: inline-block;
+	zoom: 1;
+    *display: inline;
+}
+
+#FlowBrowser .rightcolumn {
+	width: 37.6%;
+	vertical-align: top;
+	display: inline-block;
+	zoom: 1;
+    *display: inline;
+}
+
+#FlowBrowser .savebox, #FlowBrowser .loginbox {
+	background-color: #FEFEFE;
+	border: 1px solid #CECECE;
+	border-radius: 3px 3px 3px 3px;
+	padding: 3%;
+	float: left;
+	margin: 5px 0 15px 0;
+}
+
+#FlowBrowser .loginbox {
+	float: right;
+}
+
+#FlowBrowser .savebox h3, #FlowBrowser .savebox p, , #FlowBrowser .loginbox h3, #FlowBrowser .loginbox p {
+	margin: 3px 0 3px 0;
+}
+*/
+/*
+#FlowBrowser input.invalid {
+    background: url("../pics/validationerror.png") no-repeat scroll 98% center rgba(255, 0, 0, 0.2);
+    border: 1px solid #C32929;
+    border-radius: 3px 3px 3px 3px;
+}*/
+/*
+#FlowBrowser .flows {
+	border-top: 1px solid #CECECE;
+	margin: 1% 0 3%;
+}
+
+#FlowBrowser .flows .disabled .leftcolumn {
+	filter: alpha(opacity=60);
+	opacity: 0.6;
+}
+
+#FlowBrowser .flows .flow {
+	border-bottom: 1px solid #CECECE;
+    padding: 2% 0 2% 0;
+    width: 100%;	
+}
+
+
+#FlowBrowser .flows .flow h2 {
+	margin: 0 0 4px;
+}
+
+#FlowBrowser .flow-icon {
+	float: left;
+	padding: 0 3% 3% 3%;
+}
+
+#FlowBrowser .flow-information {
+	float: left;
+	width: 84%;
+}
+
+#FlowBrowser .long-flow-description {
+	background-color: #FEFEFE;
+	border: 1px solid #CECECE;
+	border-radius: 3px 3px 3px 3px;
+	margin: 2% 0 0 0;
+	overflow: hidden;
+	padding: 2% 3%;
+	display: none;
+	float: left;
+	width: 100%;
+}
+*/
+.ui-tooltip {
+  position: absolute !important;
+  z-index: 101 !important;
+  text-align: left !important;
+  font-style: normal !important;
+  font-family: 'Source Sans Pro', sans-serif !important;
+  font-weight: 400 !important;
+  font-size: 14px !important;
+  color: #fff !important;
+  padding: 12px !important;
+  background: #303030 !important;
+  border-radius: 4px !important;
+  border: none !important;
+}
+.ui-tooltip .marker {
+  position: absolute !important;
+  display: block !important;
+  bottom: -8px !important;
+  right: 15px !important;
+  background: url(../pics/marker-sprite.png) 0 -20px no-repeat !important;
+  width: 16px !important;
+  height: 8px !important;
+}
+.ui-tooltip.ui-tooltip-flip .marker {
+  left: 15px !important;
+}
+
+#FlowBrowser .freeTextAlternativeValue {
+	margin-top: 5px;
+	margin-left: 3px;
+	width: 50%;
+}
+
+FlowBrowser.contentitem input[type="checkbox"], input[type="radio"] {
+	display: none;
+}
+
+#ajaxLoadingMessage h1, #submitLoadingMessage h1 {
+	background: url("../pics/loading.gif") no-repeat scroll 18px center transparent;
+    float: left;
+    font-size: 17px !important;
+    font-weight: 400;
+    margin: 10px 0;
+    padding: 0 18px 0 45px;
+    text-align: center;
+    text-transform: none;
+}
+
+#ajaxLoadingMessage p.tiny {
+	background: none repeat scroll 0 0 transparent;
+    float: right;
+    font-size: 10px;
+    margin: 20px 5px 0 0 !important;
+    padding: 0;
+}
+
+#ajaxErrorMessage {
+	cursor: default;
+	padding: 15px;
+}
+
+#ajaxErrorMessage h1 {
+	font-size: 17px !important;
+	text-align: center;
+	margin: 0 0 5px 0;
+	padding: 0;
+	text-transform: none;
+	font-weight: 400;
+}
+
+#ajaxErrorMessage p {
+	margin: 0 0 10px 0;
+}
+
+#ajaxErrorMessage input[type="button"] {
+	font-size: 1em;
+	margin-right: 5px;
+	display: inline;
+}
+
+.blockMsg {
+	width: auto !important;
+	border: 1px solid #2969BF !important;
+	border-radius: 3px;
+	background-color: #F3F8FF !important;
+}
+
+.blockOverlay {
+	opacity: 0 !important;
+}
+
+table.oep-table th {
+	white-space: normal;
+}
+
+table.oep-table thead.sortable tr .header {
+	cursor: pointer;
+}
+
+table.oep-table thead.sortable th.headerSortDown span:after, table.oep-table thead.sortable th.headerSortUp span:after {
+	display: inline-block;
+}
+
+table.oep-table tr.disabled td, table.oep-table tr.disabled td a {
+	color: #7b7b7b;
+}
+
+#sortingForm .affectedQuery {
+	background-color: #ffdddd;
+}
+
+.heading-wrapper p.description {
+	clear: both;
+	padding: 0 0 0 27px;
+}
+
+.usergroup-list{
+	padding: 0 0 0 0;
+}
+
+#OperatingMessageModule div.scrolllist {
+	height: 200px;
+}
+
+#FlowBrowser section.modal.warning {
+	padding: 10px 10px;
+}

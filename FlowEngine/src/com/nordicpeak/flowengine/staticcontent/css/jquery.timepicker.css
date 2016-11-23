@@ -1,0 +1,49 @@
+div.time-picker {
+	background: none repeat scroll 0 0 #fff;
+	border: 1px solid #e2e6e8;
+	box-shadow: 0 0.125em 0.375em rgba(0, 0, 0, 0.15);
+	display: none;
+	left: 0;
+	max-height: 191px;
+	overflow: auto;
+	padding: 0.3125em;
+	position: absolute;
+	width: 100px;
+	z-index: 700;
+}
+
+
+div.time-picker-12hours {
+  width:6em; /* needed for IE */
+}
+
+div.time-picker ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+div.time-picker li {
+	border-radius: 0.125em;
+    cursor: pointer;
+    font-weight: 600;
+    height: 1.4em;
+    line-height: 1.4em;
+    margin-top: 0.25em;
+    overflow: hidden;
+    padding: 0 0.75em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+div.time-picker li:hover {
+	background: none repeat scroll 0 0 #f6f8fc;
+	color: #002947;
+}
+
+div.time-picker li.selected {
+  background: none repeat scroll 0 0 #0064ad;
+    color: #fff;
+}
+
+input[type="text"].error { background-color: #FFF0F0; border-width: 1px; }

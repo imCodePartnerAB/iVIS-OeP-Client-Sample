@@ -1,0 +1,77 @@
+<DBScripts>
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `blogtags` MODIFY COLUMN `tag` VARCHAR(255) BINARY CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+			]]>
+		</Query>		
+	</Script>
+	
+	<Script version="2">
+		<Query>
+			<![CDATA[
+				SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `blogcomments` DROP FOREIGN KEY `FK_comments_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `blogtags` DROP FOREIGN KEY `FK_tags_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `blogcomments` 
+					ADD CONSTRAINT `FK_comments_1`
+					FOREIGN KEY (`postID` )
+					REFERENCES `blog_posts` (`postID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `blog_comments`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `blogposts` RENAME TO  `blog_posts`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `blogtags` 
+					ADD CONSTRAINT `FK_tags_1`
+					FOREIGN KEY (`postID` )
+					REFERENCES `blog_posts` (`postID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `blog_tags`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET SQL_MODE=@OLD_SQL_MODE;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+			]]>
+		</Query>		
+	</Script>			
+</DBScripts>

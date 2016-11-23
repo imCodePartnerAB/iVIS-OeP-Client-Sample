@@ -1,0 +1,73 @@
+<DBScripts>
+	
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `groups` RENAME TO `simple_groups`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET SQL_MODE=@OLD_SQL_MODE;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+			]]>
+		</Query>
+	</Script>	
+	
+	<Script version="2">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `simple_groups` (
+				  `groupID` int(10) unsigned NOT NULL AUTO_INCREMENT,
+				  `name` varchar(255) NOT NULL,
+				  `description` varchar(255) NOT NULL,
+				  `enabled` tinyint(1) NOT NULL,
+				  PRIMARY KEY (`groupID`)
+				) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+			]]>
+		</Query>
+	</Script>	
+	
+	<Script version="3">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `simple_group_attributes` (
+				  `groupID` INTEGER UNSIGNED NOT NULL,
+				  `name` VARCHAR(255) NOT NULL,
+				  `value` VARCHAR(4096) NOT NULL,
+				  PRIMARY KEY (`groupID`, `name`),
+				  CONSTRAINT `FK_simple_group_attributes_1` FOREIGN KEY `FK_simple_group_attributes_1` (`groupID`)
+				    REFERENCES `simple_groups` (`groupID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+	</Script>	
+		
+</DBScripts>

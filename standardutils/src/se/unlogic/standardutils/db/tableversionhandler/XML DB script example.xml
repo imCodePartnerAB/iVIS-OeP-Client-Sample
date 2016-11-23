@@ -1,0 +1,10 @@
+<DBScripts>
+	<Script version="1">
+		<Query>CREATE TABLE foo...</Query>
+		<Query>CREATE TABLE foo...</Query>
+		<Query>CREATE TABLE foo...</Query>
+	</Script>
+	<Script version="2">
+		<Query>UPDATE TABLE ...</Query>
+	</Script>	
+</DBScripts>

@@ -1,0 +1,55 @@
+<DBScripts>
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				CREATE TABLE IF NOT EXISTS `ivis_radio_button_queries` (
+				  `queryID` INT UNSIGNED NOT NULL,
+				  `description` LONGTEXT,
+				  `freeTextAlternative` VARCHAR(255),
+				  `helpText` LONGTEXT,
+				  PRIMARY KEY (`queryID`)
+				)
+				  ENGINE = InnoDB;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE IF NOT EXISTS `ivis_radio_button_query_alternatives` (
+				  `alternativeID` INT UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `queryID` INT UNSIGNED NOT NULL,
+				  `name` VARCHAR(255) NOT NULL,
+				  `sortIndex` INT UNSIGNED NOT NULL,
+				  `xsdElementName` VARCHAR(255),
+				  `exported` TINYINT NOT NULL,
+				  PRIMARY KEY (`alternativeID`),
+				  CONSTRAINT `FK_ivis_radio_button_query_alternatives_1` FOREIGN KEY `FK_ivis_radio_button_query_alternatives_1` (`queryID`)
+				  REFERENCES `ivis_radio_button_queries` (`queryID`)
+					ON DELETE CASCADE
+					ON UPDATE CASCADE
+				)
+				  ENGINE = InnoDB;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE IF NOT EXISTS `ivis_radio_button_query_instances` (
+				  `queryInstanceID` INT UNSIGNED NOT NULL,
+				  `queryID` INT UNSIGNED NOT NULL,
+				  `alternativeID` INT UNSIGNED,
+				  `freeTextAlternative` VARCHAR(255),
+				  PRIMARY KEY (`queryInstanceID`),
+				  CONSTRAINT `FK_ivis_radio_button_query_instances_1` FOREIGN KEY `FK_ivis_radio_button_query_instances_1` (`queryID`)
+				  REFERENCES `ivis_radio_button_queries` (`queryID`)
+					ON DELETE CASCADE
+					ON UPDATE CASCADE,
+				  CONSTRAINT `FK_ivis_radio_button_query_instances_2` FOREIGN KEY `FK_ivis_radio_button_query_instances_2` (`alternativeID`)
+				  REFERENCES `ivis_radio_button_query_alternatives` (`alternativeID`)
+					ON DELETE SET NULL
+					ON UPDATE SET NULL
+				)
+				  ENGINE = InnoDB;
+			]]>
+		</Query>		
+	</Script>	
+	
+</DBScripts>

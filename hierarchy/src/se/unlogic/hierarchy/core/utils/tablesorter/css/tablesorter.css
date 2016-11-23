@@ -1,0 +1,25 @@
+@CHARSET "ISO-8859-1";
+
+table thead.sortable tr .header {
+	text-decoration: underline;
+	cursor: pointer;
+}
+table thead.sortable th .header:hover { text-decoration: underline; }
+
+table thead.sortable th.headerSortUp span.sorticon, table thead.sortable th.headerSortDown span.sorticon {
+	display: inline-block;
+	background-position: center;
+	background-repeat: no-repeat;
+	height: 11px;
+	width: 11px;
+	float: right;
+	padding: 3px 5px;
+}
+
+table thead.sortable th.headerSortUp span.sorticon {
+	background-image: url(asc.png);
+}
+
+table thead.sortable th.headerSortDown span.sorticon {
+	background-image: url(desc.png);
+}

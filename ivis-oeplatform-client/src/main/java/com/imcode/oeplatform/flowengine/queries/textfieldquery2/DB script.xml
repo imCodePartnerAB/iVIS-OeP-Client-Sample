@@ -1,0 +1,106 @@
+<DBScripts>
+    <Script version="1">
+        <Query>
+            <![CDATA[
+				CREATE TABLE IF NOT EXISTS ivis_label_field_queries
+				(
+				  queryID INT UNSIGNED PRIMARY KEY NOT NULL,
+				  description LONGTEXT,
+				  helpText LONGTEXT,
+				  layout VARCHAR(45) NOT NULL
+				);
+			]]>
+        </Query>
+        <Query>
+            <![CDATA[
+				CREATE TABLE IF NOT EXISTS ivis_label_fields
+				(
+				  textFieldID INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+				  label VARCHAR(255),
+				  required TINYINT NOT NULL,
+				  width INT UNSIGNED,
+				  sortIndex INT UNSIGNED NOT NULL,
+				  formatValidator VARCHAR(255),
+				  queryID INT UNSIGNED NOT NULL,
+				  maxContentLength INT UNSIGNED,
+				  invalidFormatMessage VARCHAR(255),
+				  setAsAttribute TINYINT NOT NULL,
+				  attributeName VARCHAR(255),
+				  xsdElementName varchar(255) DEFAULT NULL,
+				  exported tinyint(1) NOT NULL
+				);
+			]]>
+        </Query>
+        <Query>
+            <![CDATA[
+				CREATE TABLE IF NOT EXISTS ivis_label_field_query_instance_values
+				(
+				  textFieldValueID INT UNSIGNED PRIMARY KEY NOT NULL AUTO_INCREMENT,
+				  queryInstanceID INT UNSIGNED NOT NULL,
+				  textFieldID INT UNSIGNED NOT NULL,
+				  value VARCHAR(255) NOT NULL
+				);
+			]]>
+        </Query>
+        <Query>
+            <![CDATA[
+				CREATE TABLE IF NOT EXISTS ivis_label_field_query_instances
+				(
+				  queryInstanceID INT UNSIGNED PRIMARY KEY NOT NULL,
+				  queryID INT UNSIGNED NOT NULL
+				);
+			]]>
+        </Query>
+        <Query>
+            ALTER TABLE ivis_label_field_query_instance_values ADD FOREIGN KEY (queryInstanceID) REFERENCES
+            ivis_label_field_query_instances (queryInstanceID) ON DELETE CASCADE ON UPDATE CASCADE;
+        </Query>
+        <Query>
+            ALTER TABLE ivis_label_field_query_instance_values ADD FOREIGN KEY (textFieldID) REFERENCES ivis_label_fields
+            (textFieldID) ON DELETE CASCADE ON UPDATE CASCADE;
+        </Query>
+        <Query>
+            CREATE INDEX FK_ivis_label_field_query_instance_values_1 ON ivis_label_field_query_instance_values
+            (queryInstanceID);
+        </Query>
+        <Query>
+            CREATE INDEX FK_ivis_label_field_query_instance_values_2 ON ivis_label_field_query_instance_values
+            (textFieldID);
+        </Query>
+        <Query>
+            ALTER TABLE ivis_label_field_query_instances ADD FOREIGN KEY (queryID) REFERENCES ivis_label_field_queries
+            (queryID) ON DELETE CASCADE ON UPDATE CASCADE;
+        </Query>
+        <Query>
+            CREATE INDEX FK_ivis_label_field_query_instances_1 ON ivis_label_field_query_instances (queryID);
+        </Query>
+        <Query>
+            ALTER TABLE ivis_label_fields ADD FOREIGN KEY (queryID) REFERENCES ivis_label_field_queries (queryID) ON
+            DELETE CASCADE ON UPDATE CASCADE;
+        </Query>
+        <Query>
+            CREATE INDEX FK_ivis_ivis_label_fields_1 ON ivis_label_fields (queryID);
+        </Query>
+        <Query>
+            CREATE INDEX FK_ivis_label_fields_1 ON ivis_label_fields (queryID);
+        </Query>
+    </Script>
+
+    <Script version="2">
+        <Query>
+            <![CDATA[
+            ALTER TABLE ivis_label_fields ADD dependsOn TINYINT DEFAULT FALSE  NOT NULL;
+            ]]>
+        </Query>
+        <Query>
+            <![CDATA[
+            ALTER TABLE ivis_label_fields ADD dependencySourceName VARCHAR(255) NULL;
+            ]]>
+        </Query>
+        <Query>
+            <![CDATA[
+            ALTER TABLE ivis_label_fields ADD dependencyFieldName VARCHAR(255) NULL;
+            ]]>
+        </Query>
+    </Script>
+</DBScripts>

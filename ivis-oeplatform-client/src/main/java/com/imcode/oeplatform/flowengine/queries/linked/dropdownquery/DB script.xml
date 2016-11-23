@@ -1,0 +1,34 @@
+<DBScripts>
+    <Script version="1">
+        <Query>
+            <![CDATA[
+            CREATE TABLE IF NOT EXISTS `linked_drop_down_queries` (
+              `queryID`          INT(10) UNSIGNED NOT NULL,
+              `shortDescription` VARCHAR(255)
+                                 CHARACTER SET latin1
+                                 COLLATE latin1_swedish_ci DEFAULT NULL,
+              `description`      TEXT,
+              `helpText`         TEXT,
+              `entityClassname`  VARCHAR(255),
+              PRIMARY KEY (`queryID`)
+            )
+              ENGINE = InnoDB;
+                ]]>
+        </Query>
+        <Query>
+            <![CDATA[
+            CREATE TABLE IF NOT EXISTS `linked_drop_down_query_instances` (
+              `queryInstanceID`           INT(10) UNSIGNED NOT NULL,
+              `queryID`                   INTEGER UNSIGNED NOT NULL,
+              'alternative'               LONGTEXT,
+              PRIMARY KEY (`queryInstanceID`),
+              CONSTRAINT `FK_linked_drop_down_query_instances_1` FOREIGN KEY `FK_linked_drop_down_query_instances_1` (`queryID`)
+              REFERENCES `linked_drop_down_queries` (`queryID`)
+                ON DELETE CASCADE
+                ON UPDATE CASCADE
+            )
+              ENGINE = InnoDB;
+                ]]>
+        </Query>
+    </Script>
+</DBScripts>

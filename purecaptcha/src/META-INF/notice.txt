@@ -1,0 +1,19 @@
+PureCaptcha
+Copyright 2010 Robert "Unlogic" Olofsson
+Licensed under the LGPLv3 license.
+
+For more information visit:
+http://www.unlogic.se/projects/purecaptcha 
+
+The project is originally based on kaptcha which is lisenced
+under the Apache License, Version 2.0. The original software
+and related information is available at: 
+http://code.google.com/p/kaptcha/
+
+The Java Image Processing classes are provided by JH Labs
+under the Apache License, Version 2.0. The original software
+and related information is available at:
+http://jhlabs.com/ip/filters/download.html
+
+See license.txt for the LGPLv3 license.
+See apache.license.txt for the Apache License, Version 2.0.

@@ -1,0 +1,16 @@
+<DBScripts>
+	
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `group_administrators` (
+				  `groupID` INTEGER UNSIGNED NOT NULL,
+				  `userID` INTEGER UNSIGNED NOT NULL,
+				  PRIMARY KEY (`groupID`, `userID`)
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+	</Script>	
+	
+</DBScripts>

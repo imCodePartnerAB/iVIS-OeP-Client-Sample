@@ -1,0 +1,16 @@
+<DBScripts>
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `dummy_multi_sign_signatures` (
+				  `flowInstanceID` INTEGER UNSIGNED NOT NULL,
+				  `socialSecurityNumber` VARCHAR(13) NOT NULL,
+				  `added` DATETIME NOT NULL,
+				  PRIMARY KEY (`flowInstanceID`, `socialSecurityNumber`)
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+	</Script>
+			
+</DBScripts>

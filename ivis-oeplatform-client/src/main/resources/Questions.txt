@@ -1,0 +1,39 @@
+1. В группу "Student" значимым является только поле "StudentPersonalIdNumber" все остальные поля игнорируются, так как они являются незначительными, поиск идет по personalId.
+2. поле "Student.StudentSchool" не учитывается потому что в заявке нет такого поля, эта информация хранится в студенте.
+3. зачем в опроснике присутствует два адресса "StudentRegAddr" и "studentResidentialAddr" я использую только первый, потому что в заявке предусмотрен только 1.
+    также модель данных адреса в заявке не соответствует изначальной модели предметной области. в заявке поля(StudentRegAddrStreet1, StudentRegAddrStreet2, StudentRegAddrZip, StudentRegAddrCity) изначально было(street, postalCode, municipalityCode, city, careOf, addressType) что делать с полями которых нехватает
+4. Что такое StudentsResAddrIsOther?
+5. До сих пор не понятно что делать с StudentHasAlternatingLiving
+6. StudentHasAfterSchoolCenter нет такого поля в заявке, эти данные представлены в студенте.
+7. у опросника есть возможность редактирования заявок, но в нашу систему при каждом редактировании создается новая заявка, как поступать в этом случае создавать новую заявку при первом создании или сделать возможность редактирования?
+8. что означает поле SchoolTransportApplPeriod? в заявке такое поле не представлено, в ней есть поле "academicYear" но это тоже дубль данных из студента
+9. Поле ReasonForSchoolTransport в опроснике представлено как список чекбоксов, а в заявке это просто текстовое поле, по типу комментария.
+10. MeansOfConveyance(schoolTransport) в опроснике представлено как список чекбоксов в котором может быть одновременно выбрано  несколько значений, а в заявке это единичное поле.
+11. SchoolTransporOtherInfo не представлено в заявке. что оно означает?
+12. В группе RequestingGuardian значимость имеет только поле RequestingGuardianPersId, так как только по нему ведется поиск. Остальные поля игнорируются.
+13. В заявке не представленно поле OtherContactPerson, у студента есть поле contactPerson которое непонятно как использовать.
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+1.Student group. We use only StudentPersonalIdNumber, all other info is ignored. (We use ID to bind to Student object in the DB.)
+Comment: in that case we need to show the existing info from iVIS to OeP. Name, adress, so that the user can verify that it is correct.
+We also need to use exact that info and ave it inside the application, so that this info does not change when the reg adress etc changes in iVIS.
+получается что мне нужно будет при сохранении заявки все-таки сохранить текущие данны е о студенте в заявке чтоб они не изменились при последующем редактировании студента.
+
+3.There are 2 addresses in the form: StudentRegAddr and studentRedidentialAddr. We use only first one, because there is only 1 address in the application object.
+Comment: NO – that cant be done. The first one is default – it is the official adress of the student BUT quite often the student lives somewhere else and this adress needs to be used as an alternative.
+Eg if the reg adress is so close that the student cant apply for schoolbus, he/she still must be able to apply if he lives with his aunt.
+Все равно я не понимаю зачем нам два адреса, машина же не может одновременно приехать на два адреса + еще есть Alternative living.
+Возможно стоит сделать какой то график по забору студентов?
+Пн  Адресс1
+Вт  Адресс1
+Ср  Нет
+Чт  Адресс2
+Пт  Адресс3
+Например заявка вносит данные по умалчанию на определенный период, а документ корректировки вносит корректировки в указаный период?
+
+9.ReasonForSchoolTransport is checkboxes in the form, but it is string field in the initial (and current) data model of iVIS.
+10.
+Comment: checkboxes are easier to maintain for the user -JOHAN what do you say
+11.MeansOfConveyance(schoolTransport)  is checkboxes in the form, but it is single select field in the initial (and current) data model of iVIS.
+Comment: checkboxes are easier to maintain for the user -JOHAN what do you say
+По этим двум ответам тоже не понятно, так как у нас в базе  ReasonForSchoolTransport - это строка, а в заявке это список чекбоксов, мне что его конкатенировать, или как? Причем тут удобство пользователей?
+Тоже самое по schoolTransport - несоответствие типов

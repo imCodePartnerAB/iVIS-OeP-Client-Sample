@@ -1,0 +1,47 @@
+<DBScripts>
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `manual_multi_sign_queries` (
+				  `queryID` INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
+				  `description` TEXT,
+				  `helpText` TEXT,
+				  `maxParties` INTEGER UNSIGNED,
+				  PRIMARY KEY (`queryID`)
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `manual_multi_sign_query_instances` (
+				  `queryInstanceID` INTEGER UNSIGNED NOT NULL,
+				  `queryID` INTEGER UNSIGNED NOT NULL,
+				  PRIMARY KEY (`queryInstanceID`),
+				  CONSTRAINT `FK_manual_multi_sign_query_instances_1` FOREIGN KEY `FK_manual_multi_sign_query_instances_1` (`queryID`)
+				    REFERENCES `manual_multi_sign_queries` (`queryID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				CREATE TABLE `manual_multi_sign_parties` (
+				  `queryInstanceID` INTEGER UNSIGNED NOT NULL,
+				  `socialSecurityNumber` VARCHAR(13) NOT NULL,
+				  `name` VARCHAR(255) NOT NULL,
+				  `email` VARCHAR(255) NOT NULL,
+				  PRIMARY KEY (`queryInstanceID`),
+				  CONSTRAINT `FK_manual_multi_sign_party_1` FOREIGN KEY `FK_manual_multi_sign_party_1` (`queryInstanceID`)
+				    REFERENCES `manual_multi_sign_query_instances` (`queryInstanceID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>		
+	</Script>
+			
+</DBScripts>

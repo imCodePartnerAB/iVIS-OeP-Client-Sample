@@ -1,0 +1,98 @@
+<DBScripts>
+
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `usergroups` MODIFY COLUMN `groupID` INT(10) NOT NULL;
+			]]>
+		</Query>
+	</Script>
+	
+	<Script version="2">
+		<Query>
+			<![CDATA[
+				SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `usergroups` DROP FOREIGN KEY `FK_usergroups_1`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `usergroups` 
+					ADD CONSTRAINT `FK_usergroups_1`
+					FOREIGN KEY (`userID` )
+					REFERENCES `simple_users` (`userID` )
+					ON DELETE CASCADE
+					ON UPDATE CASCADE, RENAME TO  `simple_user_groups`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `users` RENAME TO  `simple_users`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET SQL_MODE=@OLD_SQL_MODE;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+			]]>
+		</Query>
+	</Script>	
+	
+	<Script version="3">
+		<Query>
+			<![CDATA[
+				CREATE TABLE `simple_user_attributes` (
+				  `userID` INTEGER UNSIGNED NOT NULL,
+				  `name` VARCHAR(255) NOT NULL,
+				  `value` VARCHAR(4096) NOT NULL,
+				  PRIMARY KEY (`userID`),
+				  CONSTRAINT `FK_simple_user_attributes_1` FOREIGN KEY `FK_simple_user_attributes_1` (`userID`)
+				    REFERENCES `simple_users` (`userID`)
+				    ON DELETE CASCADE
+				    ON UPDATE CASCADE
+				)
+				ENGINE = InnoDB;
+			]]>
+		</Query>
+	</Script>	
+	
+	<Script version="4">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `simple_user_attributes` DROP PRIMARY KEY, ADD PRIMARY KEY  USING BTREE(`userID`, `name`);
+			]]>
+		</Query>
+	</Script>	
+	
+	<Script version="5">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `simple_user_attributes` ADD INDEX `Index_2`(`name`);
+			]]>
+		</Query>
+	</Script>	
+	
+</DBScripts>

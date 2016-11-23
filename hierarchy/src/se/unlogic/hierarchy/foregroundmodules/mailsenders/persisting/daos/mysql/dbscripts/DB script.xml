@@ -1,0 +1,56 @@
+<DBScripts>
+	
+	<Script version="1">
+		<Query>
+			<![CDATA[
+				SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='TRADITIONAL,ALLOW_INVALID_DATES';
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `attachments` RENAME TO  `email_attachments`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `bccrecipients` RENAME TO  `email_bcc_recipients`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `ccrecipients` RENAME TO  `email_cc_recipients`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `recipients` RENAME TO  `email_recipients`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `replyto` RENAME TO  `email_replyto`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET SQL_MODE=@OLD_SQL_MODE;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+			]]>
+		</Query>
+	</Script>		
+			
+</DBScripts>

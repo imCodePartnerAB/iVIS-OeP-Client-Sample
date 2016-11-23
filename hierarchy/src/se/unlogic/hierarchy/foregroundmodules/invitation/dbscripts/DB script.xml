@@ -1,0 +1,38 @@
+<DBScripts>
+	
+	<Script version="1">
+		<!--	
+		<Query>
+			<![CDATA[
+				DELETE FROM foregroundmodules WHERE classname = "se.unlogic.hierarchy.foregroundmodules.invitation.InvitationModule";
+			]]>
+		</Query>
+		-->
+		<Query>
+			<![CDATA[
+				ALTER TABLE `invitationtypes` RENAME TO `user_invitation_types`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `invitations` RENAME TO `user_invitations`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `invitationtypegroups` RENAME TO `user_invitation_type_groups`;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `user_invitation_types` MODIFY COLUMN `message` TEXT CHARACTER SET latin1 COLLATE latin1_swedish_ci NOT NULL;
+			]]>
+		</Query>
+		<Query>
+			<![CDATA[
+				ALTER TABLE `user_invitation_types` ADD COLUMN `registrationText` TEXT NOT NULL AFTER `senderEmail`, ADD COLUMN `registeredText` TEXT NOT NULL AFTER `registrationText`;
+			]]>
+		</Query>											
+	</Script>	
+			
+</DBScripts>

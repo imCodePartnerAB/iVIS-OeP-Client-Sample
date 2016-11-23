@@ -1,0 +1,15 @@
+<DBScripts>
+	
+	<Script version="1">
+
+	</Script>	
+		
+	<Script version="2">
+		<Query>
+			<![CDATA[
+				ALTER TABLE `registrationcofirmations` RENAME TO  `registration_cofirmations` ;
+			]]>
+		</Query>		
+	</Script>		
+			
+</DBScripts>
