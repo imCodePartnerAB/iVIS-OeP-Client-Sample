@@ -92,7 +92,7 @@ function onChange(select, queryID, flowInstanceID) {
         }
     )
 
-    var url = "/oep/linkeddropdown/update/" + queryID + "/" + id + "/" + flowInstanceID;
+    var url = "/linkeddropdown/update/" + queryID + "/" + id + "/" + flowInstanceID;
     $.get(url);
 }
 

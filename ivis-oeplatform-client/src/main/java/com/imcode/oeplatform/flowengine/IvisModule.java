@@ -613,7 +613,7 @@ public class IvisModule extends AnnotatedForegroundModule {
 
     private void saveApplication(Application application, IvisServiceFactory ivisServiceFactory) {
 //        application = ApplicationPopulator.loadObjectFromFile("/home/vitaly/SkypeFiles/Application.dat");
-        ivisServiceFactory = ApplicationPopulator.localIvisServiceFactory();
+//        ivisServiceFactory = ApplicationPopulator.localIvisServiceFactory();
         ApplicationService applicationService = ivisServiceFactory.getService(ApplicationService.class);
         ApplicationFormService formService = ivisServiceFactory.getService(ApplicationFormService.class);
         ApplicationFormStepService stepService = ivisServiceFactory.getService(ApplicationFormStepService.class);
