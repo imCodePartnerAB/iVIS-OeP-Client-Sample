@@ -92,7 +92,12 @@ function onChange(select, queryID, flowInstanceID) {
         }
     )
 
-    var url = "/linkeddropdown/update/" + queryID + "/" + id + "/" + flowInstanceID;
+    var $context = $("#context-path-wrapper");
+    var contextPath = '';
+    if ($context.length > 0) {
+        contextPath = $context.val()
+    }
+    var url = contextPath + "/linkeddropdown/update/" + queryID + "/" + id + "/" + flowInstanceID;
     $.get(url);
 }
 

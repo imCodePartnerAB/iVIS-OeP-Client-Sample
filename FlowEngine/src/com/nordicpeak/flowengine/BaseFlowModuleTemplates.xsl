@@ -507,6 +507,18 @@
 				</div>
 				
 				<div class="section-full push">
+
+                    <input type="hidden">
+
+                        <xsl:attribute name="id">
+                            <xsl:value-of select="'context-path-wrapper'"/>
+                        </xsl:attribute>
+
+                        <xsl:attribute name="value">
+                            <xsl:value-of select="/Document/requestinfo/contextpath"/>
+                        </xsl:attribute>
+
+                    </input>
 					
 					<div class="queries">
 					
