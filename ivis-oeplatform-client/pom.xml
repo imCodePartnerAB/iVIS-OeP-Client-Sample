@@ -50,28 +50,8 @@
                     <showDeprecation>true</showDeprecation>
                 </configuration>
             </plugin>
-            <!--&lt;!&ndash; Includes the runtime dependencies &ndash;&gt;-->
-            <!--<plugin>-->
-                <!--<groupId>org.dstovall</groupId>-->
-                <!--<artifactId>onejar-maven-plugin</artifactId>-->
-                <!--<version>1.4.4</version>-->
-                <!--<executions>-->
-                    <!--<execution>-->
-                        <!--<goals>-->
-                            <!--<goal>one-jar</goal>-->
-                        <!--</goals>-->
-                    <!--</execution>-->
-                <!--</executions>-->
-            <!--</plugin>-->
         </plugins>
     </build>
-    <!--&lt;!&ndash; One-Jar is in the googlecode repository &ndash;&gt;-->
-    <!--<pluginRepositories>-->
-        <!--<pluginRepository>-->
-            <!--<id>onejar-maven-plugin.googlecode.com</id>-->
-            <!--<url>http://onejar-maven-plugin.googlecode.com/svn/mavenrepo</url>-->
-        <!--</pluginRepository>-->
-    <!--</pluginRepositories>-->
     <dependencies>
         <dependency>
             <groupId>junit</groupId>
@@ -83,6 +63,11 @@
         <dependency>
             <groupId>com.imcode.ivis</groupId>
             <artifactId>ivis-core</artifactId>
+            <version>1.0.0-alpha1-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>com.imcode.ivis</groupId>
+            <artifactId>ivis-services</artifactId>
             <version>1.0.0-alpha1-SNAPSHOT</version>
         </dependency>
         <dependency>
