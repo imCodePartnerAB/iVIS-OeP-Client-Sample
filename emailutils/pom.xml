@@ -37,7 +37,58 @@
                 <target>1.6</target>
             </configuration>
       </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.4</version>
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.4</version>
+            <executions>
+                <execution>
+                    <id>attach-sources</id>
+                    <phase>verify</phase>
+                    <goals>
+                        <goal>jar-no-fork</goal>
+                    </goals>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-deploy-plugin</artifactId>
+            <dependencies>
+                <dependency>
+                    <version>2.9</version>
+                    <groupId>org.apache.maven.wagon</groupId>
+                    <artifactId>wagon-ssh</artifactId>
+                </dependency>
+            </dependencies>
+        </plugin>
     </plugins>
   </build>
+    <distributionManagement>
+        <repository>
+            <id>imcode</id>
+            <name>imCode Internal Repository</name>
+            <url>scp://repo.imcode.com:2022/srv/www/repo.imcode.com/maven2</url>
+        </repository>
+    </distributionManagement>
+    <scm>
+        <connection>scm:svn:https://svn.imcode.com/imcode/imcms/trunk</connection>
+        <developerConnection>scm:svn:https://svn.imcode.com/imcode/imcms/trunk</developerConnection>
+        <url/>
+    </scm>
 </project>
 

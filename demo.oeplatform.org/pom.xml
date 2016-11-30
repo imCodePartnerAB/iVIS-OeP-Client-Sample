@@ -17,11 +17,11 @@
             <artifactId>ivis-oeplatform-client</artifactId>
             <version>1.0.0-alpha1-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.nordicpeak.flowengine</groupId>-->
-            <!--<artifactId>flow-instance-pdf-generator</artifactId>-->
-            <!--<version>1.2.1</version>-->
-        <!--</dependency>-->
+        <dependency>
+            <groupId>com.nordicpeak.flowengine</groupId>
+            <artifactId>flow-instance-pdf-generator</artifactId>
+            <version>1.2.1</version>
+        </dependency>
     </dependencies>
     <build>
         <finalName>oep-client</finalName>
