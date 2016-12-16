@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.nordicpeak</groupId>
     <artifactId>oep-ivis</artifactId>
-    <version>1.0.0-alpha1</version>
+    <version>1.0.0-alpha2</version>
     <packaging>war</packaging>
     <dependencies>
         <dependency>
@@ -15,7 +15,7 @@
         <dependency>
             <groupId>com.imcode.ivis</groupId>
             <artifactId>ivis-oeplatform-client</artifactId>
-            <version>1.0.0-alpha1</version>
+            <version>1.0.0-alpha2</version>
         </dependency>
         <!--<dependency>-->
             <!--<groupId>com.nordicpeak.flowengine</groupId>-->

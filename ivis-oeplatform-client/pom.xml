@@ -4,7 +4,7 @@
 
     <artifactId>ivis-oeplatform-client</artifactId>
     <groupId>com.imcode.ivis</groupId>
-    <version>1.0.0-alpha1</version>
+    <version>1.0.0-alpha2</version>
     <packaging>jar</packaging>
 
     <name>ivis-oeplatform-client</name>
@@ -12,6 +12,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <ivis.version>1.0.0-alpha2</ivis.version>
     </properties>
 
     <dependencies>
@@ -25,17 +26,17 @@
         <dependency>
             <groupId>com.imcode.ivis</groupId>
             <artifactId>ivis-core</artifactId>
-            <version>1.0.0-alpha1</version>
+            <version>${ivis.version}</version>
         </dependency>
         <dependency>
             <groupId>com.imcode.ivis</groupId>
             <artifactId>ivis-services</artifactId>
-            <version>1.0.0-alpha1</version>
+            <version>${ivis.version}</version>
         </dependency>
         <dependency>
             <groupId>com.imcode.ivis</groupId>
             <artifactId>ivis-sdk</artifactId>
-            <version>1.0.0-alpha1</version>
+            <version>${ivis.version}</version>
         </dependency>
         <dependency>
             <groupId>se.unlogic</groupId>
